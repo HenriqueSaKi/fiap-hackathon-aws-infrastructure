@@ -18,6 +18,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Terraform Action
+        run: echo "::warning::Action selected ${{ github.event.inputs.action }}"
+
       # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
