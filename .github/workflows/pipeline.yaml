@@ -22,7 +22,7 @@ jobs:
         run: echo "::warning::Action selected ${{ github.event.inputs.action }}"
 
   deploy-sqs-lambda-function:
-    name: Create SQS Lambda Function
+    name: SQS Lambda Function - ${{ github.event.inputs.action }}
     runs-on: ubuntu-latest
     needs: configuration
 
@@ -57,12 +57,19 @@ jobs:
           terraform -chdir=sqs-lambda-function plan
 
       # Terraform Apply
-      - name: Terraform Apply or Destroy
+      - name: Terraform Apply
+        if: github.event.inputs.action == 'apply'
+        run: |
+          terraform -chdir=sqs-lambda-function ${{ github.event.inputs.action }} -auto-approve
+
+      # Terraform Destroy
+      - name: Terraform Destroy
+        if: github.event.inputs.action == 'destroy'
         run: |
           terraform -chdir=sqs-lambda-function ${{ github.event.inputs.action }} -auto-approve
 
   deploy-sqs-queue:
-    name: Create SQS Queue
+    name: SQS Queue - ${{ github.event.inputs.action }}
     runs-on: ubuntu-latest
     needs: deploy-sqs-lambda-function
 
@@ -98,11 +105,18 @@ jobs:
 
       # Terraform Apply
       - name: Terraform Apply
+        if: github.event.inputs.action == 'apply'
+        run: |
+          terraform -chdir=sqs-queue ${{ github.event.inputs.action }} -auto-approve
+        
+      # Terraform Destroy
+      - name: Terraform Destroy
+        if: github.event.inputs.action == 'destroy'
         run: |
           terraform -chdir=sqs-queue ${{ github.event.inputs.action }} -auto-approve
 
   deploy-ecr-video-processor:
-    name: Create ECR Video Processor
+    name: ECR Video Processor - ${{ github.event.inputs.action }}
     runs-on: ubuntu-latest
     needs: deploy-sqs-lambda-function
 
@@ -138,11 +152,18 @@ jobs:
 
       # Terraform Apply
       - name: Terraform Apply
+        if: github.event.inputs.action == 'apply'
+        run: |
+          terraform -chdir=ecr-video-processor ${{ github.event.inputs.action }} -auto-approve
+
+      # Terraform Destroy
+      - name: Terraform Destroy
+        if: github.event.inputs.action == 'destroy'
         run: |
           terraform -chdir=ecr-video-processor ${{ github.event.inputs.action }} -auto-approve
           
   deploy-ecr-frame-processor:
-    name: Create ECR Frame Processor
+    name: ECR Frame Processor - ${{ github.event.inputs.action }}
     runs-on: ubuntu-latest
     needs: deploy-sqs-lambda-function
 
@@ -178,11 +199,18 @@ jobs:
 
       # Terraform Apply
       - name: Terraform Apply
+        if: github.event.inputs.action == 'apply'
+        run: |
+          terraform -chdir=ecr-frame-processor ${{ github.event.inputs.action }} -auto-approve
+
+      # Terraform Destroy
+      - name: Terraform Destroy
+        if: github.event.inputs.action == 'destroy'
         run: |
           terraform -chdir=ecr-frame-processor ${{ github.event.inputs.action }} -auto-approve
 
   deploy-dynamodb:
-    name: Create DynamoDB tables
+    name: DynamoDB - ${{ github.event.inputs.action }}
     runs-on: ubuntu-latest
     needs: deploy-sqs-lambda-function
 
@@ -218,11 +246,18 @@ jobs:
 
       # Terraform Apply
       - name: Terraform Apply
+        if: github.event.inputs.action == 'apply'
+        run: |
+          terraform -chdir=dynamodb ${{ github.event.inputs.action }} -auto-approve
+
+      # Terraform Destroy
+      - name: Terraform Destroy
+        if: github.event.inputs.action == 'destroy'
         run: |
           terraform -chdir=dynamodb ${{ github.event.inputs.action }} -auto-approve
 
   deploy-eks:
-    name: Create EKS
+    name: EKS - ${{ github.event.inputs.action }}
     runs-on: ubuntu-latest
     needs: deploy-sqs-queue
 
@@ -258,5 +293,12 @@ jobs:
 
       # Terraform Apply
       - name: Terraform Apply
+        if: github.event.inputs.action == 'apply'
+        run: |
+          terraform -chdir=eks-fiap-cluster ${{ github.event.inputs.action }} -auto-approve
+
+      # Terraform Destroy
+      - name: Terraform Destroy
+        if: github.event.inputs.action == 'destroy'
         run: |
           terraform -chdir=eks-fiap-cluster ${{ github.event.inputs.action }} -auto-approve
