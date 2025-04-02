@@ -14,7 +14,7 @@ on:
 
 jobs:
   configuration:
-    name: Configure AWS and Terraform
+    name: Configure AWS
     runs-on: ubuntu-latest
 
     steps:
