@@ -33,12 +33,6 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: us-east-1
 
-      # Set up Terraform
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.5.6
-
   deploy-sqs-lambda-function:
     name: Create SQS Lambda Function
     runs-on: ubuntu-latest
@@ -48,6 +42,12 @@ jobs:
       # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
+
+      # Set up Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.6
 
       # Terraform Init
       - name: Terraform Init
@@ -75,6 +75,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Set up Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.6
+
       # Terraform Init
       - name: Terraform Init
         run: |
@@ -100,6 +106,12 @@ jobs:
       # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
+
+      # Set up Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.6
 
       # Terraform Init
       - name: Terraform Init
@@ -127,6 +139,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Set up Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.6
+
       # Terraform Init
       - name: Terraform Init
         run: |
@@ -153,6 +171,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Set up Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.6
+
       # Terraform Init
       - name: Terraform Init
         run: |
@@ -178,6 +202,12 @@ jobs:
       # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
+
+      # Set up Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.6
 
       # Terraform Init
       - name: Terraform Init
