@@ -14,13 +14,19 @@ on:
 
 jobs:
   configuration:
-    name: Configure AWS
+    name: Terraform Action
     runs-on: ubuntu-latest
 
     steps:
       - name: Terraform Action
         run: echo "::warning::Action selected ${{ github.event.inputs.action }}"
 
+  deploy-sqs-lambda-function:
+    name: Create SQS Lambda Function
+    runs-on: ubuntu-latest
+    needs: configuration
+
+    steps:
       # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
@@ -32,16 +38,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: us-east-1
-
-  deploy-sqs-lambda-function:
-    name: Create SQS Lambda Function
-    runs-on: ubuntu-latest
-    needs: configuration
-
-    steps:
-      # Checkout the code
-      - name: Checkout code
-        uses: actions/checkout@v3
 
       # Set up Terraform
       - name: Setup Terraform
@@ -75,6 +71,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: us-east-1
+
       # Set up Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -106,6 +110,14 @@ jobs:
       # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: us-east-1
 
       # Set up Terraform
       - name: Setup Terraform
@@ -139,6 +151,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: us-east-1
+
       # Set up Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -171,6 +191,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: us-east-1
+
       # Set up Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -202,6 +230,14 @@ jobs:
       # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: us-east-1
 
       # Set up Terraform
       - name: Setup Terraform
