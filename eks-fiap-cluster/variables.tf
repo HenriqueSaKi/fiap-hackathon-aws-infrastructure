@@ -15,7 +15,7 @@ variable "instanceType" {
 }
 
 variable "accountIdVoclabs" {
-  default = "306321160159"
+  default = "345124661122"
 }
 
 variable "authMode" {
