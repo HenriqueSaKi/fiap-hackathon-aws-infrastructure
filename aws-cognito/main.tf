@@ -46,10 +46,18 @@ resource "aws_cognito_user_pool_client" "userpool_client" {
   refresh_token_validity = 1
   access_token_validity = 1
   id_token_validity = 1
+
+  allowed_oauth_flows = ["code", "implicit", "client_credentials"]
+  allowed_oauth_scopes = ["openid", "email", "profile"]
   
   token_validity_units {
     access_token = "hours"
     id_token = "hours"
     refresh_token = "hours"    
   }
+}
+
+resource "aws_cognito_user_pool_domain" "userpool_domain" {
+  domain       = "fiap-userpool-domain" # must be unique in AWS region
+  user_pool_id = aws_cognito_user_pool.userpool.id
 }
