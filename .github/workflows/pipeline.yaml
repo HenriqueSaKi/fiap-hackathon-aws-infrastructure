@@ -68,7 +68,7 @@ jobs:
         run: |
           terraform -chdir=aws-cognito ${{ github.event.inputs.action }} -auto-approve
 
-  deploy-ecr-video-appi:
+  deploy-ecr-video-api:
     name: ECR Video Api - ${{ github.event.inputs.action }}
     runs-on: ubuntu-latest
     needs: configuration
@@ -259,7 +259,7 @@ jobs:
   # deploy-eks:
   #   name: EKS - ${{ github.event.inputs.action }}
   #   runs-on: ubuntu-latest
-  #   needs: deploy-sqs-queue
+  #   needs: [deploy-amazon-cognito, deploy-ecr-video-api, deploy-ecr-backoffice, deploy-sqs-queue]
 
   #   steps:
   #     # Checkout the code
