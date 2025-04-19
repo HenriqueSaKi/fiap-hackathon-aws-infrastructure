@@ -1,5 +1,5 @@
-resource "aws_ecr_repository" "ecr_video_processor" {
-  name                 = "video-processor"
+resource "aws_ecr_repository" "ecr_backoffice" {
+  name                 = "backoffice"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
