@@ -68,8 +68,8 @@ jobs:
         run: |
           terraform -chdir=aws-cognito ${{ github.event.inputs.action }} -auto-approve
 
-  deploy-ecr-video-frame:
-    name: ECR Video Frame - ${{ github.event.inputs.action }}
+  deploy-ecr-video-appi:
+    name: ECR Video Api - ${{ github.event.inputs.action }}
     runs-on: ubuntu-latest
     needs: configuration
 
@@ -95,28 +95,28 @@ jobs:
       # Terraform Init
       - name: Terraform Init
         run: |
-          terraform -chdir=ecr-video-frame init
+          terraform -chdir=ecr-video-api init
 
       # Terraform Plan
       - name: Terraform Plan
         if: github.event.inputs.action == 'apply'
         run: |
-          terraform -chdir=ecr-video-frame plan
+          terraform -chdir=ecr-video-api plan
 
       # Terraform Apply
       - name: Terraform Apply
         if: github.event.inputs.action == 'apply'
         run: |
-          terraform -chdir=ecr-video-frame ${{ github.event.inputs.action }} -auto-approve
+          terraform -chdir=ecr-video-api ${{ github.event.inputs.action }} -auto-approve
 
       # Terraform Destroy
       - name: Terraform Destroy
         if: github.event.inputs.action == 'destroy'
         run: |
-          terraform -chdir=ecr-video-frame ${{ github.event.inputs.action }} -auto-approve
+          terraform -chdir=ecr-video-api ${{ github.event.inputs.action }} -auto-approve
           
   deploy-ecr-backoffice:
-    name: ECR Backoffice - ${{ github.event.inputs.action }}
+    name: ECR Video Backoffice - ${{ github.event.inputs.action }}
     runs-on: ubuntu-latest
     needs: configuration
 
@@ -142,25 +142,25 @@ jobs:
       # Terraform Init
       - name: Terraform Init
         run: |
-          terraform -chdir=ecr-backoffice init
+          terraform -chdir=ecr-video-backoffice init
 
       # Terraform Plan
       - name: Terraform Plan
         if: github.event.inputs.action == 'apply'
         run: |
-          terraform -chdir=ecr-backoffice plan
+          terraform -chdir=ecr-video-backoffice plan
 
       # Terraform Apply
       - name: Terraform Apply
         if: github.event.inputs.action == 'apply'
         run: |
-          terraform -chdir=ecr-backoffice ${{ github.event.inputs.action }} -auto-approve
+          terraform -chdir=ecr-video-backoffice ${{ github.event.inputs.action }} -auto-approve
 
       # Terraform Destroy
       - name: Terraform Destroy
         if: github.event.inputs.action == 'destroy'
         run: |
-          terraform -chdir=ecr-backoffice ${{ github.event.inputs.action }} -auto-approve
+          terraform -chdir=ecr-video-backoffice ${{ github.event.inputs.action }} -auto-approve
 
   deploy-sqs-lambda-function:
     name: SQS Lambda Function - ${{ github.event.inputs.action }}

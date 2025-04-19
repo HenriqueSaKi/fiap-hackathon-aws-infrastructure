@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "fiap-hackathon-terraform-state-bucket"
-    key    = "ecr-video-frame/terraform.tfstate"
+    key    = "ecr-video-api/terraform.tfstate"
     region = "us-east-1"
   }
 }
