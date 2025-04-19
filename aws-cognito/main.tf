@@ -46,6 +46,14 @@ resource "aws_cognito_user_pool_client" "userpool_client" {
   refresh_token_validity = 1
   access_token_validity = 1
   id_token_validity = 1
+
+  allowed_oauth_flows_user_pool_client = true
+  allowed_oauth_flows                  = ["code"]
+  allowed_oauth_scopes                 = ["openid", "email", "profile"]
+
+  callback_urls = [
+    "https://oauth.pstmn.io/v1/callback"
+  ]
   
   token_validity_units {
     access_token = "hours"
