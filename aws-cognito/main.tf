@@ -41,7 +41,7 @@ resource "aws_cognito_user_pool_client" "userpool_client" {
   user_pool_id = aws_cognito_user_pool.userpool.id
   supported_identity_providers = ["COGNITO"]
   explicit_auth_flows = ["ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH", "ALLOW_USER_PASSWORD_AUTH"]
-  generate_secret = false
+  generate_secret = true
   prevent_user_existence_errors = "LEGACY"
   refresh_token_validity = 1
   access_token_validity = 1
