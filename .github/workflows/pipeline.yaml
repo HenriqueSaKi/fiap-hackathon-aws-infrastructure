@@ -256,49 +256,49 @@ jobs:
         run: |
           terraform -chdir=sqs-queue ${{ github.event.inputs.action }} -auto-approve
 
-  # deploy-eks:
-  #   name: EKS - ${{ github.event.inputs.action }}
-  #   runs-on: ubuntu-latest
-  #   needs: [deploy-amazon-cognito, deploy-ecr-video-api, deploy-ecr-backoffice, deploy-sqs-queue]
+  deploy-eks:
+    name: EKS - ${{ github.event.inputs.action }}
+    runs-on: ubuntu-latest
+    needs: [deploy-amazon-cognito, deploy-ecr-video-api, deploy-ecr-backoffice, deploy-sqs-queue]
 
-  #   steps:
-  #     # Checkout the code
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-  #     - name: Configure AWS credentials
-  #       uses: aws-actions/configure-aws-credentials@v1
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-  #         aws-region: us-east-1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: us-east-1
 
-  #     # Set up Terraform
-  #     - name: Setup Terraform
-  #       uses: hashicorp/setup-terraform@v2
-  #       with:
-  #         terraform_version: 1.5.6
+      # Set up Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.6
 
-  #     # Terraform Init
-  #     - name: Terraform Init
-  #       run: |
-  #         terraform -chdir=eks-fiap-cluster init
+      # Terraform Init
+      - name: Terraform Init
+        run: |
+          terraform -chdir=eks-fiap-cluster init
 
-  #     # Terraform Plan
-  #     - name: Terraform Plan
-  #       if: github.event.inputs.action == 'apply'
-  #       run: |
-  #         terraform -chdir=eks-fiap-cluster plan
+      # Terraform Plan
+      - name: Terraform Plan
+        if: github.event.inputs.action == 'apply'
+        run: |
+          terraform -chdir=eks-fiap-cluster plan
 
-  #     # Terraform Apply
-  #     - name: Terraform Apply
-  #       if: github.event.inputs.action == 'apply'
-  #       run: |
-  #         terraform -chdir=eks-fiap-cluster ${{ github.event.inputs.action }} -auto-approve
+      # Terraform Apply
+      - name: Terraform Apply
+        if: github.event.inputs.action == 'apply'
+        run: |
+          terraform -chdir=eks-fiap-cluster ${{ github.event.inputs.action }} -auto-approve
 
-  #     # Terraform Destroy
-  #     - name: Terraform Destroy
-  #       if: github.event.inputs.action == 'destroy'
-  #       run: |
-  #         terraform -chdir=eks-fiap-cluster ${{ github.event.inputs.action }} -auto-approve
+      # Terraform Destroy
+      - name: Terraform Destroy
+        if: github.event.inputs.action == 'destroy'
+        run: |
+          terraform -chdir=eks-fiap-cluster ${{ github.event.inputs.action }} -auto-approve
